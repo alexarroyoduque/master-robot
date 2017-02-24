@@ -1,6 +1,6 @@
-# master-robot
+# master-robot VR
 
-Shooter on rails demo with [a-frame](https://aframe.io/)
+Shooter on rails demo with [a-frame](https://aframe.io/) for cardboard.
 
 ## Play with demo - Android
 
