@@ -22,3 +22,6 @@ Shooter on rails demo with [a-frame](https://aframe.io/) for cardboard.
 > Portfolio: [http://alexarroyoduque.github.io](http://alexarroyoduque.github.io)
 
 > Twitter: [@AlexArroyoDuque](https://twitter.com/AlexArroyoDuque)
+
+### Music by
+> [remaxim](http://opengameart.org/content/high-tech-lab) 
