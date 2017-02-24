@@ -7,6 +7,7 @@ var theme = document.querySelector('#theme');
 theme.volume = 0.5;
 var deathSound = document.querySelector('#deathSound');
 var startScreen = document.querySelector('#startScreen');
+var resetScreen = document.querySelector('#resetScreen');
 
 function lozalizedRobotStart(event) {
   var target = event.target;
@@ -32,8 +33,7 @@ startScreen.addEventListener('mouseenter', function () {
   var target = event.target;
   target.localized = true;
   setTimeout(function() {
-    if (target.localized && target.parentNode && target.parentNode.removeChild) {
-      target.parentNode.removeChild(target);
+    if (target.localized) {
       theme.play();
       animationRails.emit(animationRailsEvent);
     }
@@ -41,3 +41,15 @@ startScreen.addEventListener('mouseenter', function () {
 
 });
 startScreen.addEventListener('mouseleave', lozalizedEnd);
+
+resetScreen.addEventListener('mouseenter', function () {
+  var target = event.target;
+  target.localized = true;
+  setTimeout(function() {
+    if (target.localized) {
+      location.reload();
+    }
+  }, localizedTime);
+
+});
+resetScreen.addEventListener('mouseleave', lozalizedEnd);
