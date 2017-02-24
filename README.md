@@ -6,7 +6,7 @@ Shooter on rails demo with [a-frame](https://aframe.io/)
 
 [https://master-robot.firebaseapp.com](https://master-robot.firebaseapp.com)
 
-![qr-demo](https://github.com/alexarroyoduque/master-robot/assets/qr-demo.jpg)
+![qr-demo](https://github.com/alexarroyoduque/master-robot/blob/master/assets/qr-demo.jpg)
 
 
 ## Developers, developers, developers
