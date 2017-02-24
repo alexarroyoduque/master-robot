@@ -2,7 +2,11 @@
 
 Shooter on rails demo with [a-frame](https://aframe.io/)
 
-## Getting Started
+## Play with demo
+
+[https://master-robot.firebaseapp.com](https://master-robot.firebaseapp.com)
+
+## Developers, developers, developers
 
     npm install && npm start
     open http://localhost:3000/
