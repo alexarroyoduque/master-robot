@@ -2,9 +2,12 @@
 
 Shooter on rails demo with [a-frame](https://aframe.io/)
 
-## Play with demo
+## Play with demo - Android
 
 [https://master-robot.firebaseapp.com](https://master-robot.firebaseapp.com)
+
+![qr-demo](https://github.com/alexarroyoduque/master-robot/qr-demo.jpg)
+
 
 ## Developers, developers, developers
 
