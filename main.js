@@ -1,4 +1,3 @@
-const initialHealth = 3;
 const localizedTime = 1000;
 const animationRailsEvent = 'start';
 var player = {
