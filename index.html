@@ -1,0 +1,2056 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>master-robot</title>
+    <meta name="description" content="master-robot">
+    <script src="https://aframe.io/releases/0.3.2/aframe.min.js"></script>
+
+    <script src="https://rawgit.com/bryik/aframe-bmfont-text-component/master/dist/aframe-bmfont-text-component.min.js"></script>
+    <!DOCTYPE html>
+
+  </head>
+  <body>
+
+    <a-scene>
+      <a-assets>
+        <img id="sky" src="assets/images/sky.jpg">
+        <img id="metal" src="assets/images/ground.jpg">
+        <audio id="deathSound" src="assets/audio/Click_Electronic_14.mp3" preload></audio>
+        <audio id="theme" src="assets/audio/high-tech-lab.mp3" preload loop></audio>
+        <a-mixin id="primaryColor" material="color:#efbc3b;"></a-mixin>
+        <a-mixin id="secondaryColor" material="color:#068bf7;"></a-mixin>
+        <a-mixin id="tertiaryColor" material="color:#ff5722;"></a-mixin>
+        <a-mixin id="lightColor" material="color:white;"></a-mixin>
+        <a-mixin id="darkColor" material="color:#494a4a;"></a-mixin>
+        <a-mixin id="robotTexture" material="src:#metal;"></a-mixin>
+        <a-mixin id="hitBox"
+          material="color:#ff0000; opacity: 0"
+          geometry="primitive:box; width:1.2; height:2.7; depth:1.8;"
+        ></a-mixin>
+        <a-mixin id="head"
+          geometry="primitive:box;"
+          position="0 0.6 0"
+        ></a-mixin>
+        <a-mixin id="head2"
+          geometry="primitive:sphere; thetaLength: 90; radius:0.5;"
+          position="0 0.3 0"
+        ></a-mixin>
+        <a-mixin id="antenna"
+          geometry="primitive:torus;radius:0.5; arc:120; radiusTubular:0.02"
+          position="0.2 0.7 -0.5"
+          rotation="0 70 90"
+        ></a-mixin>
+        <a-mixin id="antenna2"
+          geometry="primitive:sphere;radius:0.1;"
+          position="0.5 0.05 -0.05"
+        ></a-mixin>
+        <a-mixin id="eyeContainer"
+          geometry="primitive:box; width: 0.9; height: 0.4; depth:0.4;"
+          position="0 0.25 0.4"
+        ></a-mixin>
+        <a-mixin id="eyeContainer2"
+          material="color: #ff5722;"
+          geometry="primitive:box; width: 1.05; height: 0.35; depth:0.7;"
+          position="0 0.34 0.2"
+        ></a-mixin>
+        <a-mixin id="eye1"
+          material="color: #2aec30;"
+          geometry="primitive:cylinder; height:0.3; radius: 0.15;"
+          position="-0.2 0.0 0.1"
+          rotation="90 0 0"
+        ></a-mixin>
+        <a-mixin id="eye2"
+          material="color: #2aec30;"
+          geometry="primitive:cylinder; height:0.3; radius: 0.15;"
+          position="0.2 0.0 0.1"
+          rotation="90 0 0"
+        ></a-mixin>
+        <a-mixin id="mouth"
+          material="color:white;"
+          geometry="primitive:box;depth:0.2; width:0.7; height:0.2;"
+          position="0 -0.2 0.45"
+        ></a-mixin>
+
+        <a-mixin id="body"
+          geometry="primitive:box;depth:0.7; width:0.7; height:0.8;"
+          position="0 -0.9 0"
+        ></a-mixin>
+
+        <a-mixin id="arm1"
+          geometry="primitive:box;depth:0.7; width:0.1; height:0.2;"
+          position="-0.65 0.3 0.4"
+          pivot="0 0 -0.2"
+        ></a-mixin>
+
+        <a-mixin id="shoulder1"
+          geometry="primitive:sphere;radius:0.25;"
+          position="0.21 0 -0.3"
+        ></a-mixin>
+
+        <a-mixin id="arm2"
+          geometry="primitive:box;depth:0.7; width:0.1; height:0.2;"
+          position="0.65 0.3 0.4"
+          pivot="0 0 -0.2"
+        ></a-mixin>
+        <a-mixin id="shoulder2"
+          geometry="primitive:sphere;radius:0.25;"
+          position="-0.21 0 -0.3"
+        ></a-mixin>
+
+        <a-mixin id="wheelSupport"
+          geometry="primitive:sphere;radius:0.3;thetaLength: 90;"
+          position="0 -0.4 0"
+          rotation="180 0 0"
+        ></a-mixin>
+        <a-mixin id="wheel"
+          geometry="primitive:torus;radius:0.2; arc:360; radiusTubular:0.08 "
+          position="0 -0.6 0"
+          rotation="0 90 0 "
+        ></a-mixin>
+
+
+        <a-mixin id="wall-long"
+          material="color:#6173F4;src:#metal"
+          geometry="primitive:box;depth:10; width:0.5; height:10;"
+        ></a-mixin>
+        <a-mixin id="wall-wide"
+          material="color:#6173F4;src:#metal"
+          geometry="primitive:box;depth:0.5; width:10; height:10;"
+        ></a-mixin>
+
+      </a-assets>
+
+
+
+
+      <!-- room 1 -->
+      <a-entity position="17 1.24 -20" rotation="0 -40 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="21 1.24 -24" rotation="0 -20 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="15 1.24 -29" rotation="0 -10 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="22 1.24 -30" rotation="0 -40 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <!-- room 2 -->
+      <a-entity position="8 1.24 -49" rotation="0 120 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="10 1.24 -59" rotation="0 -40 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-4 1.24 -51" rotation="0 40 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-0.5 1.24 -60" rotation="0 40 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-7 1.24 -58" rotation="0 40 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-15 1.24 -49" rotation="0 120 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-22 1.24 -50" rotation="0 140 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-18 1.24 -62" rotation="0 -40 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <!-- room 3 -->
+      <a-entity position="-22 9.22 -73" rotation="0 -10 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-28 9.22 -82" rotation="0 20 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-26 9.22 -83" rotation="0 -10 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-24 9.22 -82" rotation="0 -20 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-20 9.22 -82" rotation="0 -20 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <!-- room 4 -->
+
+      <a-entity position="-2.8 9.22 -83" rotation="0 -90 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-5 9.22 -85" rotation="0 -70 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-13 9.22 -84" rotation="0 -85 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-10 9.22 -86" rotation="0 -80 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-2 9.22 -89" rotation="0 -10 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-5 9.22 -88" rotation="0 -10 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-6 9.22 -84" rotation="0 -10 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-8 9.22 -86" rotation="0 -10 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-8 9.22 -90" rotation="0 -10 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-5 9.22 -94" rotation="0 -30 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-3 9.22 -95" rotation="0 -30 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-6 9.22 -98" rotation="0 -60 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <!-- room 5 -->
+      <a-entity position="-12 9.22 -110" rotation="0 0 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-15 9.22 -118" rotation="0 20 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-13 9.22 -122" rotation="0 20 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-23 9.22 -118" rotation="0 90 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-28 9.22 -120" rotation="0 100 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-25 9.22 -128" rotation="0 80 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-19 9.22 -125" rotation="0 60 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-30 9.22 -125" rotation="0 60 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-34 9.22 -118" rotation="0 110 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-40 9.22 -122" rotation="0 90 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-42 9.22 -128" rotation="0 90 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-46 9.22 -126" rotation="0 90 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-49 9.22 -122" rotation="0 90 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+      <a-entity position="-44 9.22 -118" rotation="0 90 0"mixin="hitBox" class="hit-box">
+        <a-box mixin="head primaryColor robotTexture">
+          <a-torus mixin="antenna tertiaryColor robotTexture">
+            <a-sphere mixin="antenna2 tertiaryColor robotTexture"></a-sphere>
+          </a-torus>
+          <a-sphere mixin="head2 primaryColor robotTexture"></a-sphere>
+          <a-box mixin="eyeContainer secondaryColor robotTexture">
+            <a-cylinder mixin="eye1 robotTexture" ></a-cylinder>
+            <a-cylinder mixin="eye2 robotTexture" ></a-cylinder>
+          </a-box>
+          <a-box mixin="eyeContainer2 robotTexture"></a-box>
+          <a-box mixin="mouth robotTexture"></a-box>
+          <a-box mixin="body secondaryColor robotTexture">
+            <a-box mixin="arm1 primaryColor robotTexture">
+              <a-sphere mixin="shoulder1 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="600"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-box mixin="arm2 primaryColor robotTexture">
+              <a-sphere mixin="shoulder2 tertiaryColor robotTexture"></a-sphere>
+              <a-animation attribute="rotation"
+                 dur="550"
+                 fill="forwards"
+                 to="-20 0 0"
+                 direction="alternate"
+                 repeat="indefinite">
+               </a-animation>
+            </a-box>
+            <a-sphere mixin="wheelSupport lightColor robotTexture"></a-sphere>
+            <a-torus mixin="wheel darkColor robotTexture"></a-torus>
+          </a-box>
+        </a-box>
+      </a-entity>
+
+
+      <!-- start screen -->
+      <a-entity position="0 5 -5">
+        <a-box id="startScreen" color="#91a69b" width="3" height="2" depth="1" opacity="0.1">
+          <a-entity position="-1.2 0.2 0.8">
+            <a-entity
+            align="left"
+            bmfont-text="text: Manten la mirada en los; color: red"
+            ></a-entity>
+            <a-entity
+            position="0 -0.3 0"
+            align="left"
+            bmfont-text="text: robots para desactivarlos; color: red"
+            ></a-entity>
+          </a-entity>
+
+          <a-entity
+          position="-1.2 -0.8 0.8"
+          align="left"
+          bmfont-text="text: Mira aqui para empezar; color: orange"
+          ></a-entity>
+
+        </a-box>
+      </a-entity>
+
+      <!-- walls -->
+      <a-entity position="0 5 -12">
+        <a-box mixin="wall-wide" position="-5 0 20" scale="2 1 1"></a-box>
+        <a-box mixin="wall-long" position="5 0 15"></a-box>
+        <a-box mixin="wall-long" position="-5 0 10"></a-box>
+        <a-box mixin="wall-long" position="-5 0 0"></a-box>
+        <a-box mixin="wall-long" position="5 0 5"></a-box>
+        <a-box mixin="wall-wide" position="-2.5 0 -5" scale="0.5 1 1"></a-box>
+        <a-box mixin="wall-wide" position="5 0 -5"></a-box>
+        <a-box mixin="wall-long" position="10 0 -10"></a-box>
+        <a-box mixin="wall-wide" position="10 0 0"></a-box>
+        <a-box mixin="wall-wide" position="20 0 0"></a-box>
+        <a-box mixin="wall-long" position="25 0 -5"></a-box>
+        <a-box mixin="wall-long" position="25 0 -15"></a-box>
+        <a-box mixin="wall-wide" position="20 0 -20"></a-box>
+        <a-box mixin="wall-long" position="10 0 -20"></a-box>
+        <a-box mixin="wall-long" position="10 0 -30"></a-box>
+        <a-box mixin="wall-long" position="15 0 -25"></a-box>
+        <a-box mixin="wall-long" position="15 0 -35"></a-box>
+        <a-box mixin="wall-wide" position="5 0 -35"></a-box>
+        <a-box mixin="wall-long" position="15 0 -45"></a-box>
+        <a-box mixin="wall-wide" position="10 0 -50"></a-box>
+        <a-box mixin="wall-wide" position="0 0 -50"></a-box>
+        <a-box mixin="wall-wide" position="-5 0 -35"></a-box>
+        <a-box mixin="wall-wide" position="-10 0 -50"></a-box>
+        <a-box mixin="wall-wide" position="-15 0 -35"></a-box>
+        <a-box mixin="wall-wide" position="-25 0 -35"></a-box>
+        <a-box mixin="wall-long" position="-30 0 -40"></a-box>
+        <a-box mixin="wall-long" position="-30 0 -50"></a-box>
+        <a-box mixin="wall-long" position="-15 0 -55"></a-box>
+        <a-box mixin="wall-long" position="-30 0 -60"></a-box>
+        <a-box mixin="wall-wide" position="-15 0 -60"></a-box>
+      </a-entity>
+
+      <a-entity position="-25 12 -80">
+        <a-box mixin="wall-long" position="4.8 -11 11" scale="40 0.5 0.7"></a-box>
+        <a-box mixin="wall-long" position="0 -8 15" rotation="30 0 -90" scale="1 1 1.8"></a-box>
+        <a-box mixin="wall-long" position="-5 0 0"></a-box>
+        <a-box mixin="wall-long" position="5 0 5"></a-box>
+        <a-box mixin="wall-wide" position="-2.5 0 -5" scale="0.5 1 1"></a-box>
+
+        <a-box mixin="wall-wide" position="5 0 -5"></a-box>
+        <a-box mixin="wall-long" position="10 0 -10"></a-box>
+        <a-box mixin="wall-wide" position="10 0 0"></a-box>
+        <a-box mixin="wall-wide" position="20 0 0"></a-box>
+        <a-box mixin="wall-long" position="25 0 -5"></a-box>
+        <a-box mixin="wall-long" position="25 0 -15"></a-box>
+        <a-box mixin="wall-wide" position="20 0 -20"></a-box>
+        <a-box mixin="wall-long" position="10 0 -20"></a-box>
+        <a-box mixin="wall-long" position="10 0 -30"></a-box>
+        <a-box mixin="wall-long" position="15 0 -25"></a-box>
+        <a-box mixin="wall-long" position="15 0 -35"></a-box>
+        <a-box mixin="wall-wide" position="5 0 -35"></a-box>
+        <a-box mixin="wall-long" position="15 0 -45"></a-box>
+        <a-box mixin="wall-wide" position="10 0 -50"></a-box>
+        <a-box mixin="wall-wide" position="0 0 -50"></a-box>
+        <a-box mixin="wall-wide" position="-5 0 -35"></a-box>
+        <a-box mixin="wall-wide" position="-10 0 -50"></a-box>
+        <a-box mixin="wall-wide" position="-15 0 -35"></a-box>
+        <a-box mixin="wall-wide" position="-25 0 -35"></a-box>
+        <a-box mixin="wall-long" position="-30 0 -40"></a-box>
+        <a-box mixin="wall-long" position="-30 0 -50"></a-box>
+        <a-box mixin="wall-long" position="-15 0 -55"></a-box>
+        <a-box mixin="wall-long" position="-30 0 -60"></a-box>
+      </a-entity>
+
+      <a-sky color="#6e91ba" src="#sky"></a-sky>
+      <a-plane
+        position="0 0 -20"
+        src="#metal"
+        rotation="-90 0 0"
+        height="100"
+        width="100">
+      </a-plane>
+      <a-plane
+        src="#metal"
+        position="-20 8 -122"
+        rotation="-90 0 0"
+        height="100"
+        width="100">
+      </a-plane>
+
+      <a-light type="ambient" intensity="1.2" color="white"></a-light>
+      <a-light type="point" intensity="1" position="-10 5 0"></a-light>
+      <a-entity position="0 1 0">
+        <a-camera>
+          <a-cursor></a-cursor>
+
+          <a-animation attribute="position" begin="start"
+            dur="5000"
+            easing="ease"
+            to="0 2 -13"
+          ></a-animation>
+          <a-animation attribute="position" begin="start"
+            delay="5000"
+            dur="5000"
+            easing="ease"
+            from="0 2 -13"
+            to="15 2 -15"
+          ></a-animation>
+          <a-animation attribute="position" begin="start"
+            delay="11000"
+            dur="2000"
+            easing="ease"
+            from="15 2 -15"
+            to="13 2 -20"
+          ></a-animation>
+
+          <a-animation attribute="position" begin="start"
+            delay="13000"
+            dur="7000"
+            easing="ease"
+            from="13 2 -20"
+            to="12 2 -50"
+          ></a-animation>
+
+          <a-animation attribute="position" begin="start"
+            delay="20000"
+            dur="5000"
+            easing="ease"
+            from="12 2 -50"
+            to="-20 2 -55"
+          ></a-animation>
+
+          <a-animation attribute="position" begin="start"
+            delay="25000"
+            dur="5000"
+            easing="ease"
+            from="-20 2 -55"
+            to="-25 10 -75"
+          ></a-animation>
+
+          <a-animation attribute="position" begin="start"
+            delay="30000"
+            dur="3000"
+            easing="ease"
+            from="-25 10 -75"
+            to="-28 10 -80"
+          ></a-animation>
+
+          <a-animation attribute="position" begin="start"
+            delay="33000"
+            dur="2000"
+            easing="ease"
+            from="-28 10 -80"
+            to="-24 10 -76"
+          ></a-animation>
+
+          <a-animation attribute="position" begin="start"
+            delay="35000"
+            dur="3000"
+            easing="ease"
+            from="-24 10 -76"
+            to="-26 10 -79"
+          ></a-animation>
+
+          <a-animation attribute="position" begin="start"
+            delay="38000"
+            dur="1000"
+            easing="ease"
+            from="-26 10 -79"
+            to="-20 10 -82"
+          ></a-animation>
+
+          <a-animation attribute="position" begin="start"
+            delay="39000"
+            dur="3000"
+            easing="ease"
+            from="-20 10 -82"
+            to="-10 10 -83"
+          ></a-animation>
+
+          <a-animation attribute="position" begin="start"
+            delay="42000"
+            dur="1000"
+            easing="ease"
+            from="-10 10 -83"
+            to="-12 10 -90"
+          ></a-animation>
+
+          <a-animation attribute="position" begin="start"
+            delay="43000"
+            dur="4000"
+            easing="ease"
+            from="-12 10 -90"
+            to="-13 10 -115"
+          ></a-animation>
+
+          <a-animation attribute="position" begin="start"
+            delay="47000"
+            dur="1000"
+            easing="ease"
+            from="-13 10 -115"
+            to="-12 10 -120"
+          ></a-animation>
+
+
+          <a-animation attribute="position" begin="start"
+            delay="48000"
+            dur="2000"
+            easing="ease"
+            from="-12 10 -120"
+            to="-40 10 -120"
+          ></a-animation>
+
+          <a-animation attribute="position" begin="start"
+            delay="50000"
+            dur="4000"
+            easing="ease"
+            from="-40 10 -120"
+            to="-45 10 -135"
+          ></a-animation>
+
+        </a-camera>
+      </a-entity>
+
+    </a-scene>
+  </body>
+
+
+  <script src="main.js"></script>
+
+</html>
