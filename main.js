@@ -1,9 +1,5 @@
 const localizedTime = 1000;
 const animationRailsEvent = 'start';
-var player = {
-  score: 0,
-  health: initialHealth
-};
 
 var robots = document.querySelectorAll('.hit-box');
 var animationRails = document.querySelector('a-animation[begin="' + animationRailsEvent + '"');
